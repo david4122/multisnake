@@ -52,11 +52,15 @@ public class Snake implements Animatable, Driveable {
 
 	private synchronized void move() throws GameOver {
 		Point nextLoc = head.loc.translate(dir, 1);
-		Object o = world.get(nextLoc);
+		Object o;
+		try {
+			o = world.get(nextLoc);
+		} catch(PointOutOfBoundariesException e){
+			throw new GameOver("You've fallen off the edge of the world!'");
+		}
 		if(o instanceof Food)
 			eat(((Food)o));
 		else if(o instanceof Snake){
-			System.out.println("BIT");
 			if(o == this)
 				throw new GameOver("You bit yourself!");
 			else
