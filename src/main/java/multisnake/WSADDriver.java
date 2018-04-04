@@ -25,6 +25,8 @@ public class WSADDriver extends Driver implements EventHandler<KeyEvent>{
 			case D:
 				subject.move(Direction.EAST);
 				break;
+			default:
+				//
 		}
 	}
 

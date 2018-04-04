@@ -48,8 +48,8 @@ public class World extends Canvas {
 		}
 	}
 
-	private ConcurrentLinkedQueue<Snake>snakes;
-	private FoodFactory foodFactory;
+	private ConcurrentLinkedQueue<Snake>snakes = new ConcurrentLinkedQueue<>();
+	private FoodFactory foodFactory = new FoodFactory(this);
 	private Food food;
 	private int fieldSize;
 	private final int worldWidth;
@@ -57,24 +57,27 @@ public class World extends Canvas {
 
 	private WorldAnimationTimer timer;
 
-	public World(int width, int height, int fsize, FoodFactory ff) {
+	public World(int width, int height, int fsize) {
 		super(width*fsize, height*fsize);
-		this.snakes = new ConcurrentLinkedQueue<>();
 		this.worldWidth = width;
 		this.worldHeight = height;
 		this.fieldSize = fsize;
-		this.foodFactory = ff;
+
+		createFood();
 
 		addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>(){
 			@Override
 			public void handle(KeyEvent e){
 				switch(e.getCode()){
+					case SPACE:
 					case P:
 						if(World.this.timer.isStopped())
 							World.this.timer.start();
 						else
 							World.this.timer.stop();
 						break;
+					default:
+						//
 				}
 			}
 		});
@@ -83,17 +86,17 @@ public class World extends Canvas {
 		timer.start();
 
 		setFocusTraversable(true);
-		createFood();
 	}
 
-	public World(int width, int height, int fsize) {
-		this(width, height, fsize, new FoodFactory());
+	public World(int width, int height, int fsize, FoodFactory ff) {
+		this(width, height, fsize);
+		this.foodFactory = ff;
 	}
 
-	public synchronized Object get(Point p) throws PointOutOfBoundariesException {
+	public synchronized Object get(Point p) {
 		if(p.x > worldWidth || p.x < 0 || p.y > worldHeight || p.y < 0)
 			throw new PointOutOfBoundariesException();
-		if(food.getLocation().equals(p))
+		if(food !=null && food.getLocation().equals(p))
 			return food;
 		for(Snake s: snakes){
 			if(s.occupies(p))
