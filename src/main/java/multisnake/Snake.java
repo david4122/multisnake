@@ -3,15 +3,18 @@ package multisnake;
 import java.util.concurrent.TimeUnit;
 
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 
 public class Snake implements Animatable, Driveable {
 	private class Segment {
 		private Point loc;
 		private Segment prev;
+		private Color color;
 
-		Segment(Point loc, Segment p) {
+		Segment(Point loc, Segment p, Color c) {
 			this.loc = loc;
 			this.prev = p;
+			this.color = c;
 		}
 	}
 
@@ -19,18 +22,24 @@ public class Snake implements Animatable, Driveable {
 	private Segment tail;
 	private int size = 1;
 	private Direction dir;
+	private SkinGenerator sg = new DefaultSkinGenerator();
 	private World world;
 
 	private long delay;
 	private long lastUpdate;
 
-	public Snake(World w, Point start, int initSize, Direction dir) {
+	public Snake(World w, Point start, int initSize, Direction dir, SkinGenerator sg) {
 		this.world = w;
 		this.dir = dir;
 		this.delay = TimeUnit.NANOSECONDS.convert(100, TimeUnit.MILLISECONDS);
-		this.head = this.tail = new Segment(start, null);
+		this.sg = sg;
+		this.head = this.tail = new Segment(start, null, sg.next());
 		for(int i=0;i<initSize;i++)
 			addSegment();
+	}
+
+	public Snake(World w, Point start, int initSize, Direction dir) {
+		this(w, start, initSize, dir, new DefaultSkinGenerator());
 	}
 
 	public synchronized boolean occupies(Point p) {
@@ -41,13 +50,16 @@ public class Snake implements Animatable, Driveable {
 		return false;
 	}
 
+	@Override
 	public synchronized void update(GraphicsContext gc, long time) throws GameOver {
 		if(time - lastUpdate > delay){
 			move();
 			this.lastUpdate = time;
 		}
-		for(Segment s=tail; s!=null; s=s.prev)
+		for(Segment s=tail; s!=null; s=s.prev){
+			gc.setFill(s.color);
 			gc.fillRect(s.loc.x*world.getFieldSize(), s.loc.y*world.getFieldSize(), world.getFieldSize(), world.getFieldSize());
+		}
 	}
 
 	private synchronized void move() throws GameOver {
@@ -77,7 +89,7 @@ public class Snake implements Animatable, Driveable {
 	}
 
 	private synchronized void addSegment() {
-		tail = new Segment(tail.loc, tail);
+		tail = new Segment(tail.loc, tail, sg.next());
 		this.size++;
 	}
 
