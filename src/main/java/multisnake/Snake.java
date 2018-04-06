@@ -1,9 +1,12 @@
 package multisnake;
 
 import java.util.concurrent.TimeUnit;
-
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+
+import multisnake.skin.SkinGenerator;
+import multisnake.skin.DefaultSkinGenerator;
+import multisnake.driver.Driveable;
 
 public class Snake implements Animatable, Driveable {
 	private class Segment {

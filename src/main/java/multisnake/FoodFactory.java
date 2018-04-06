@@ -12,8 +12,6 @@ public class FoodFactory {
 	}
 
 	public Food next() {
-		if(this.world == null)
-			throw new RuntimeException("World not initialized");
 		Point p;
 		do {
 			p = new Point(rand.nextInt(world.getWorldWidth()),

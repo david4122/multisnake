@@ -1,30 +1,35 @@
-package multisnake;
+package multisnake.driver;
 
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyEvent;
 
-public class ArrowsDriver extends Driver implements EventHandler<KeyEvent> {
-	private Driveable subject;
+import multisnake.Direction;
+import multisnake.World;
 
-	public ArrowsDriver(Driveable d){
+public class WSADDriver extends Driver implements EventHandler<KeyEvent>{
+	private final Driveable subject;
+
+	public WSADDriver(Driveable d) {
 		this.subject = d;
 	}
 
 	@Override
 	public void handle(KeyEvent event) {
 		switch(event.getCode()){
-			case UP:
+			case W:
 				subject.move(Direction.NORTH);
 				break;
-			case DOWN:
+			case S:
 				subject.move(Direction.SOUTH);
 				break;
-			case LEFT:
+			case A:
 				subject.move(Direction.WEST);
 				break;
-			case RIGHT:
+			case D:
 				subject.move(Direction.EAST);
 				break;
+			default:
+				//
 		}
 	}
 
@@ -32,5 +37,4 @@ public class ArrowsDriver extends Driver implements EventHandler<KeyEvent> {
 	public void install(World w) {
 		w.addEventHandler(KeyEvent.KEY_PRESSED, this);
 	}
-
 }

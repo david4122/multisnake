@@ -1,7 +1,7 @@
-package multisnake;
+package multisnake.skin;
 
 import javafx.scene.paint.Color;
 
-abstract class SkinGenerator {
+public abstract class SkinGenerator {
 	public abstract Color next();
 }

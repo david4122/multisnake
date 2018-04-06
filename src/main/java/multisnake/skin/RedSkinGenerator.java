@@ -1,4 +1,4 @@
-package multisnake;
+package multisnake.skin;
 
 import javafx.scene.paint.Color;
 
