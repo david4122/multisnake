@@ -1,9 +1,11 @@
 package multisnake;
 
 import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.paint.Color;
 import javafx.scene.control.Alert.AlertType;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
@@ -21,6 +23,7 @@ public class World extends Canvas {
 				for(Snake s: snakes)
 					s.update(getGraphicsContext2D(), currentTime);
 				food.update(getGraphicsContext2D(), fieldSize);
+				drawBorder();
 			} catch(GameOver e){
 				this.stop();
 				Alert alert = new Alert(AlertType.WARNING, e.getMessage(), ButtonType.OK);
@@ -86,6 +89,7 @@ public class World extends Canvas {
 		timer.start();
 
 		setFocusTraversable(true);
+		drawBorder();
 	}
 
 	public World(int width, int height, int fsize, FoodFactory ff) {
@@ -94,7 +98,7 @@ public class World extends Canvas {
 	}
 
 	public synchronized Object get(Point p) {
-		if(p.x > worldWidth || p.x < 0 || p.y > worldHeight || p.y < 0)
+		if(p.x >= worldWidth || p.x < 0 || p.y >= worldHeight || p.y < 0)
 			throw new PointOutOfBoundariesException();
 		if(food !=null && food.getLocation().equals(p))
 			return food;
@@ -107,6 +111,13 @@ public class World extends Canvas {
 
 	public synchronized void createFood() {
 		food = foodFactory.next();
+	}
+
+	void drawBorder(){
+		GraphicsContext gc = getGraphicsContext2D();
+		gc.setStroke(Color.BLACK);
+		gc.setLineWidth(5);
+		gc.strokeRect(0, 0, worldWidth*fieldSize, worldHeight*fieldSize);
 	}
 
 	public synchronized int getFieldSize() {
