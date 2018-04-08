@@ -38,4 +38,9 @@ public class WSADDriver extends Driver implements EventHandler<KeyEvent>{
 	public void setSubject(Driveable d) {
 		this.subject = d;
 	}
+
+	@Override
+	public void uninstall(World w) {
+		w.removeEventHandler(KeyEvent.KEY_PRESSED, this);
+	}
 }

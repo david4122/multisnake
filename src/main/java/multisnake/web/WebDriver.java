@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.net.Socket;
 
 import multisnake.Direction;
+import multisnake.Snake;
 import multisnake.World;
 import multisnake.driver.Driveable;
 import multisnake.driver.Driver;
@@ -13,6 +14,7 @@ import multisnake.driver.Driver;
 public class WebDriver extends Driver implements Runnable {
 	private Socket remote;
 	private Driveable subject;
+	private World world;
 
 	public WebDriver(Socket remote) {
 		this.remote = remote;
@@ -20,6 +22,11 @@ public class WebDriver extends Driver implements Runnable {
 
 	@Override
 	public void install(World w) {
+		this.world = w;
+	}
+
+	@Override
+	public void uninstall(World w) {
 		//
 	}
 
@@ -29,10 +36,12 @@ public class WebDriver extends Driver implements Runnable {
 				BufferedReader in = new BufferedReader(
 					new InputStreamReader(s.getInputStream()))
 				){
-			while(!Thread.currentThread().isInterrupted()){
-				String dir = in.readLine();
+			String dir;
+			while(!Thread.currentThread().isInterrupted() &&
+					(dir = in.readLine()) != null){
 				subject.move(Direction.valueOf(dir));
 			}
+			world.removeSnake((Snake)subject);
 		} catch(IOException e){
 			throw new RuntimeException(e);
 		}

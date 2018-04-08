@@ -89,7 +89,6 @@ public class World extends Canvas {
 		timer.start();
 
 		setFocusTraversable(true);
-		drawBorder();
 	}
 
 	public World(int width, int height, int fsize, FoodFactory ff) {
@@ -134,6 +133,7 @@ public class World extends Canvas {
 	}
 
 	public void removeSnake(Snake s) {
+		s.getDriver().uninstall(this);
 		snakes.remove(s);
 	}
 
