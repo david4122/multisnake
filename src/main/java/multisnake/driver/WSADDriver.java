@@ -7,11 +7,7 @@ import multisnake.Direction;
 import multisnake.World;
 
 public class WSADDriver extends Driver implements EventHandler<KeyEvent>{
-	private final Driveable subject;
-
-	public WSADDriver(Driveable d) {
-		this.subject = d;
-	}
+	private Driveable subject;
 
 	@Override
 	public void handle(KeyEvent event) {
@@ -36,5 +32,10 @@ public class WSADDriver extends Driver implements EventHandler<KeyEvent>{
 	@Override
 	public void install(World w) {
 		w.addEventHandler(KeyEvent.KEY_PRESSED, this);
+	}
+
+	@Override
+	public void setSubject(Driveable d) {
+		this.subject = d;
 	}
 }

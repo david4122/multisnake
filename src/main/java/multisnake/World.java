@@ -130,6 +130,7 @@ public class World extends Canvas {
 
 	public void addSnake(Snake s) {
 		snakes.add(s);
+		s.getDriver().install(this);
 	}
 
 	public void removeSnake(Snake s) {

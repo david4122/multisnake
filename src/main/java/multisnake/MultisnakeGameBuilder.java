@@ -13,26 +13,25 @@ public class MultisnakeGameBuilder extends GameBuilder {
 		World w = new World(width, height, fsize);
 		Snake s1 = new Snake(w, new Point(10, 10), 5, Direction.SOUTH,
 				new GraySkinGenerator());
+		ArrowsDriver d1 = new ArrowsDriver();
+		s1.setDriver(d1);
 		Snake s2 = new Snake(w, new Point(10, 30), 5, Direction.SOUTH,
 				new BlueSkinGenerator());
-		Snake s4 = new Snake(w, new Point(30, 10), 5, Direction.SOUTH,
-				new GreenSkinGenerator());
+		ArrowsDriver d2 = new ArrowsDriver();
+		s2.setDriver(d2);
 		Snake s3 = new Snake(w, new Point(30, 30), 5, Direction.SOUTH,
 				new RedSkinGenerator());
+		ArrowsDriver d3 = new ArrowsDriver();
+		s3.setDriver(d3);
+		Snake s4 = new Snake(w, new Point(30, 10), 5, Direction.SOUTH,
+				new GreenSkinGenerator());
+		ArrowsDriver d4 = new ArrowsDriver();
+		s4.setDriver(d4);
 
 		w.addSnake(s1);
 		w.addSnake(s2);
 		w.addSnake(s3);
 		w.addSnake(s4);
-
-		ArrowsDriver d1 = new ArrowsDriver(s1);
-		d1.install(w);
-		ArrowsDriver d2 = new ArrowsDriver(s2);
-		d2.install(w);
-		ArrowsDriver d3 = new ArrowsDriver(s3);
-		d3.install(w);
-		ArrowsDriver d4 = new ArrowsDriver(s4);
-		d4.install(w);
 
 		return w;
 	}

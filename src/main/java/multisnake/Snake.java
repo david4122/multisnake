@@ -7,6 +7,7 @@ import javafx.scene.paint.Color;
 import multisnake.skin.SkinGenerator;
 import multisnake.skin.DefaultSkinGenerator;
 import multisnake.driver.Driveable;
+import multisnake.driver.Driver;
 
 public class Snake implements Animatable, Driveable {
 	private class Segment {
@@ -27,6 +28,7 @@ public class Snake implements Animatable, Driveable {
 	private Direction dir;
 	private SkinGenerator sg = new DefaultSkinGenerator();
 	private World world;
+	private Driver driver;
 
 	private long delay;
 	private long lastUpdate;
@@ -118,6 +120,17 @@ public class Snake implements Animatable, Driveable {
 
 	public synchronized long lastUpdate() {
 		return this.lastUpdate;
+	}
+
+	@Override
+	public Driver getDriver(){
+		return this.driver;
+	}
+
+	@Override
+	public void setDriver(Driver d) {
+		this.driver = d;
+		d.setSubject(this);
 	}
 
 	@Override

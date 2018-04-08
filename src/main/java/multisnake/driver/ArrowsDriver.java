@@ -9,10 +9,6 @@ import multisnake.World;
 public class ArrowsDriver extends Driver implements EventHandler<KeyEvent> {
 	private Driveable subject;
 
-	public ArrowsDriver(Driveable d){
-		this.subject = d;
-	}
-
 	@Override
 	public void handle(KeyEvent event) {
 		switch(event.getCode()){
@@ -36,6 +32,11 @@ public class ArrowsDriver extends Driver implements EventHandler<KeyEvent> {
 	@Override
 	public void install(World w) {
 		w.addEventHandler(KeyEvent.KEY_PRESSED, this);
+	}
+
+	@Override
+	public void setSubject(Driveable d) {
+		this.subject = d;
 	}
 
 }

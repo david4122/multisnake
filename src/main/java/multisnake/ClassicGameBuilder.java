@@ -9,9 +9,9 @@ public class ClassicGameBuilder extends GameBuilder {
 	public World build(int width, int height, int fsize) {
 		World w = new World(width, height, fsize);
 		Snake s = new Snake(w, new Point(0, 0), 5, Direction.SOUTH, new GraySkinGenerator());
+		ArrowsDriver driver = new ArrowsDriver();
+		s.setDriver(driver);
 		w.addSnake(s);
-		ArrowsDriver driver = new ArrowsDriver(s);
-		driver.install(w);
 		return w;
 	}
 }
