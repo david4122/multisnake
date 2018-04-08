@@ -56,11 +56,15 @@ public class Snake implements Animatable, Driveable {
 	}
 
 	@Override
-	public synchronized void update(GraphicsContext gc, long time) throws GameOver {
+	public synchronized void update(long time) throws GameOver {
 		if(time - lastUpdate > delay){
 			move();
 			this.lastUpdate = time;
 		}
+	}
+
+	@Override
+	public void draw(GraphicsContext gc) {
 		for(Segment s=tail; s!=null; s=s.prev){
 			gc.setFill(s.color);
 			gc.fillRect(s.loc.x*world.getFieldSize(), s.loc.y*world.getFieldSize(), world.getFieldSize(), world.getFieldSize());

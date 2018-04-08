@@ -14,18 +14,21 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class World extends Canvas {
 	class WorldAnimationTimer extends AnimationTimer {
-		private boolean stopped;
+		private boolean paused;
 
 		@Override
 		public void handle(long currentTime){
 			getGraphicsContext2D().clearRect(0, 0, getWidth(), getHeight());
 			try {
-				for(Snake s: snakes)
-					s.update(getGraphicsContext2D(), currentTime);
+				for(Snake s: snakes){
+					if(!paused)
+						s.update(currentTime);
+					s.draw(getGraphicsContext2D());
+				}
 				food.update(getGraphicsContext2D(), fieldSize);
 				drawBorder();
 			} catch(GameOver e){
-				this.stop();
+				this.pause();
 				Alert alert = new Alert(AlertType.WARNING, e.getMessage(), ButtonType.OK);
 				alert.setOnHidden(evt -> Platform.exit());
 				alert.setHeaderText("");
@@ -34,20 +37,16 @@ public class World extends Canvas {
 			}
 		}
 
-		@Override
-		public void stop(){
-			super.stop();
-			this.stopped = true;
+		public void pause() {
+			this.paused = true;
 		}
 
-		@Override
-		public void start(){
-			super.start();
-			this.stopped = false;
+		public void resume() {
+			this.paused = false;
 		}
 
-		public boolean isStopped(){
-			return stopped;
+		public boolean isPaused(){
+			return paused;
 		}
 	}
 
@@ -74,10 +73,10 @@ public class World extends Canvas {
 				switch(e.getCode()){
 					case SPACE:
 					case P:
-						if(World.this.timer.isStopped())
-							World.this.timer.start();
+						if(World.this.timer.isPaused())
+							World.this.timer.resume();
 						else
-							World.this.timer.stop();
+							World.this.timer.pause();
 						break;
 					default:
 						//
