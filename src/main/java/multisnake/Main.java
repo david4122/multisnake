@@ -6,7 +6,6 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import multisnake.web.WebGameBuilder;
 
 public class Main extends Application {
 	private static Stage stage;

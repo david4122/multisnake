@@ -45,7 +45,7 @@ public class World extends Canvas {
 			this.paused = false;
 		}
 
-		public boolean isPaused(){
+		public boolean isPaused() {
 			return paused;
 		}
 	}
@@ -69,7 +69,7 @@ public class World extends Canvas {
 
 		addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>(){
 			@Override
-			public void handle(KeyEvent e){
+			public void handle(KeyEvent e) {
 				switch(e.getCode()){
 					case SPACE:
 					case P:
@@ -111,7 +111,7 @@ public class World extends Canvas {
 		food = foodFactory.next();
 	}
 
-	void drawBorder(){
+	void drawBorder() {
 		GraphicsContext gc = getGraphicsContext2D();
 		gc.setStroke(Color.BLACK);
 		gc.setLineWidth(5);
