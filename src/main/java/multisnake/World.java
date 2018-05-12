@@ -25,7 +25,7 @@ public class World extends Canvas {
 						s.update(currentTime);
 					s.draw(getGraphicsContext2D(), fieldSize);
 				}
-				if(food instanceof Animatable)
+				if(food instanceof Animatable && !paused)
 					((Animatable)food).update(currentTime);
 				food.draw(getGraphicsContext2D(), fieldSize);
 				drawBorder();

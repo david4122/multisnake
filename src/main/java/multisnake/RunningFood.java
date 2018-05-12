@@ -3,7 +3,6 @@ package multisnake;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
 public class RunningFood extends Food implements Animatable {
@@ -18,6 +17,7 @@ public class RunningFood extends Food implements Animatable {
 		this.delay = TimeUnit.NANOSECONDS.convert(500, TimeUnit.MILLISECONDS);
 		this.world = w;
 		this.rand = new Random();
+		this.color = Color.rgb(100, 100, 100);
 	}
 
 	@Override
@@ -30,11 +30,5 @@ public class RunningFood extends Food implements Animatable {
 			this.location = p;
 			this.lastUpdate = time;
 		}
-	}
-
-	@Override
-	public void draw(GraphicsContext gc, int fsize) {
-		gc.setFill(Color.rgb(100, 100, 100));
-		gc.fillOval(location.x*fsize, location.y*fsize, fsize, fsize);
 	}
 }

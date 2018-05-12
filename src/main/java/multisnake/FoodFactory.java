@@ -19,7 +19,9 @@ public class FoodFactory {
 		} while(world.get(p) != null);
 
 		int choice = rand.nextInt(100);
-		if(choice > 60)
+		if (choice > 75)
+			return new TeleportingFood(p, world);
+		else if(choice > 50)
 			return new RunningFood(p, world);
 		else
 			return new Food(p);
