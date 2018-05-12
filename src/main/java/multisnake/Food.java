@@ -3,7 +3,7 @@ package multisnake;
 import javafx.scene.canvas.GraphicsContext;
 
 public class Food {
-	private Point location;
+	protected Point location;
 
 	public Food(Point p) {
 		this.location = p;
@@ -13,7 +13,7 @@ public class Food {
 		return this.location;
 	}
 
-	public void update(GraphicsContext gc, int fsize) {
+	public void draw(GraphicsContext gc, int fsize) {
 		gc.fillOval(location.x*fsize, location.y*fsize, fsize, fsize);
 	}
 }

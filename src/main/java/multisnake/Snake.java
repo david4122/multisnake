@@ -64,10 +64,10 @@ public class Snake implements Animatable, Driveable {
 	}
 
 	@Override
-	public void draw(GraphicsContext gc) {
+	public void draw(GraphicsContext gc, int fsize) {
 		for(Segment s=tail; s!=null; s=s.prev){
 			gc.setFill(s.color);
-			gc.fillRect(s.loc.x*world.getFieldSize(), s.loc.y*world.getFieldSize(), world.getFieldSize(), world.getFieldSize());
+			gc.fillRect(s.loc.x*fsize, s.loc.y*fsize, fsize, fsize);
 		}
 	}
 

@@ -18,6 +18,10 @@ public class FoodFactory {
 					rand.nextInt(world.getWorldHeight()));
 		} while(world.get(p) != null);
 
-		return new Food(p);
+		int choice = rand.nextInt(100);
+		if(choice > 60)
+			return new RunningFood(p, world);
+		else
+			return new Food(p);
 	}
 }

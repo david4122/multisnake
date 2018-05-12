@@ -23,9 +23,11 @@ public class World extends Canvas {
 				for(Snake s: snakes){
 					if(!paused)
 						s.update(currentTime);
-					s.draw(getGraphicsContext2D());
+					s.draw(getGraphicsContext2D(), fieldSize);
 				}
-				food.update(getGraphicsContext2D(), fieldSize);
+				if(food instanceof Animatable)
+					((Animatable)food).update(currentTime);
+				food.draw(getGraphicsContext2D(), fieldSize);
 				drawBorder();
 			} catch(GameOver e){
 				this.pause();
@@ -127,8 +129,8 @@ public class World extends Canvas {
 	}
 
 	public void addSnake(Snake s) {
-		snakes.add(s);
 		s.getDriver().install(this);
+		snakes.add(s);
 	}
 
 	public void removeSnake(Snake s) {
