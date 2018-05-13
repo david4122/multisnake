@@ -3,7 +3,7 @@ package multisnake;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
-public class Food {
+public class Food implements Drawable, Edible {
 	protected Point location;
 	protected Color color;
 
@@ -16,8 +16,14 @@ public class Food {
 		return this.location;
 	}
 
+	@Override
 	public void draw(GraphicsContext gc, int fsize) {
 		gc.setFill(color);
 		gc.fillOval(location.x*fsize, location.y*fsize, fsize, fsize);
+	}
+
+	@Override
+	public void applyEffect(Snake s) {
+		s.addSegment();
 	}
 }

@@ -30,7 +30,7 @@ public class Snake implements Animatable, Driveable {
 	private World world;
 	private Driver driver;
 
-	private long delay;
+	private volatile long delay;
 	private long lastUpdate;
 
 	public Snake(World w, Point start, int initSize, Direction dir, SkinGenerator sg) {
@@ -93,11 +93,11 @@ public class Snake implements Animatable, Driveable {
 	}
 
 	public synchronized void eat(Food f) {
-		addSegment();
+		f.applyEffect(this);
 		world.foodEaten(f);
 	}
 
-	private synchronized void addSegment() {
+	public synchronized void addSegment() {
 		tail = new Segment(tail.loc, tail, sg.next());
 		this.size++;
 	}
@@ -114,7 +114,7 @@ public class Snake implements Animatable, Driveable {
 		return this.size;
 	}
 
-	public synchronized void setDelay(int delay) {
+	public synchronized void setDelay(long delay) {
 		this.delay = delay;
 	}
 

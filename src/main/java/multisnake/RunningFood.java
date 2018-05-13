@@ -24,9 +24,15 @@ public class RunningFood extends Food implements Animatable {
 	public void update(long time) throws GameOver {
 		if(time - lastUpdate > delay){
 			Point p;
-			do {
+			while(true){
 				p = location.translate(Direction.values()[rand.nextInt(4)], 1);
-			} while(world.get(p) != null);
+				try {
+					if(world.get(p) == null)
+						break;
+				} catch(PointOutOfBoundariesException e) {
+					//
+				}
+			}
 			this.location = p;
 			this.lastUpdate = time;
 		}
