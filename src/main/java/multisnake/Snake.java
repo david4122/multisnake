@@ -94,7 +94,7 @@ public class Snake implements Animatable, Driveable {
 
 	public synchronized void eat(Food f) {
 		addSegment();
-		world.createFood();
+		world.foodEaten(f);
 	}
 
 	private synchronized void addSegment() {

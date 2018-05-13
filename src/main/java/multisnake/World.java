@@ -10,6 +10,8 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
+
+import java.util.LinkedList;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class World extends Canvas {
@@ -25,9 +27,11 @@ public class World extends Canvas {
 						s.update(currentTime);
 					s.draw(getGraphicsContext2D(), fieldSize);
 				}
-				if(food instanceof Animatable && !paused)
-					((Animatable)food).update(currentTime);
-				food.draw(getGraphicsContext2D(), fieldSize);
+				for(Food f: food){
+					if(f instanceof Animatable && !paused)
+						((Animatable)f).update(currentTime);
+					f.draw(getGraphicsContext2D(), fieldSize);
+				}
 				drawBorder();
 			} catch(GameOver e){
 				this.pause();
@@ -54,7 +58,7 @@ public class World extends Canvas {
 
 	private ConcurrentLinkedQueue<Snake>snakes = new ConcurrentLinkedQueue<>();
 	private FoodFactory foodFactory = new FoodFactory(this);
-	private Food food;
+	private LinkedList<Food>food;
 	private int fieldSize;
 	private final int worldWidth;
 	private final int worldHeight;
@@ -67,7 +71,9 @@ public class World extends Canvas {
 		this.worldHeight = height;
 		this.fieldSize = fsize;
 
-		createFood();
+		food = new LinkedList<>();
+		for(int i=0; i<10; i++)
+			createFood();
 
 		addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>(){
 			@Override
@@ -100,8 +106,10 @@ public class World extends Canvas {
 	public synchronized Object get(Point p) {
 		if(p.x >= worldWidth || p.x < 0 || p.y >= worldHeight || p.y < 0)
 			throw new PointOutOfBoundariesException();
-		if(food !=null && food.getLocation().equals(p))
-			return food;
+		for(Food f: food){
+			if(f.getLocation().equals(p))
+				return f;
+		}
 		for(Snake s: snakes){
 			if(s.occupies(p))
 				return s;
@@ -110,7 +118,12 @@ public class World extends Canvas {
 	}
 
 	public synchronized void createFood() {
-		food = foodFactory.next();
+		food.add(foodFactory.next());
+	}
+
+	public synchronized void foodEaten(Food f) {
+		this.food.remove(f);
+		createFood();
 	}
 
 	void drawBorder() {

@@ -9,6 +9,7 @@ public class Food {
 
 	public Food(Point p) {
 		this.location = p;
+		this.color = Color.rgb(0, 0, 0);
 	}
 
 	public Point getLocation() {

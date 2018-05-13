@@ -20,8 +20,8 @@ public class Main extends Application {
 		shutdownActions = new LinkedList<>();
 
 		// world = new WebGameBuilder().build(50, 50, 10);
-		// world = new ClassicGameBuilder().build(50, 50, 10);
-		world = new MultisnakeGameBuilder().build(50, 50, 10);
+		world = new ClassicGameBuilder().build(50, 50, 10);
+		// world = new MultisnakeGameBuilder().build(50, 50, 10);
 		// world = new World(50, 50, 10);
 
 		StackPane root = new StackPane(world);
