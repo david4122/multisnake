@@ -110,7 +110,7 @@ public class Snake implements Animatable, Driveable {
 		return this.dir;
 	}
 
-	public synchronized int getSize() {
+	public synchronized int size() {
 		return this.size;
 	}
 

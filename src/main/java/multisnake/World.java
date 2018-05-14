@@ -22,11 +22,14 @@ public class World extends Canvas {
 		public void handle(long currentTime){
 			getGraphicsContext2D().clearRect(0, 0, getWidth(), getHeight());
 			try {
+				int totalLength = 0;
 				for(Snake s: snakes){
+					totalLength+=s.size();
 					if(!paused)
 						s.update(currentTime);
 					s.draw(getGraphicsContext2D(), fieldSize);
 				}
+				getGraphicsContext2D().fillText("Total length: " + totalLength, 20, 20);
 				for(Food f: food){
 					if(f instanceof Animatable && !paused)
 						((Animatable)f).update(currentTime);
