@@ -9,6 +9,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.control.Alert.AlertType;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
+import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 
 import java.util.LinkedList;
@@ -96,6 +97,12 @@ public class World extends Canvas {
 						//
 				}
 			}
+		});
+
+		focusedProperty().addListener((ObservableValue<? extends Boolean>val,
+					Boolean oldVal, Boolean newVal) -> {
+			if(!newVal && !timer.isPaused())
+				timer.pause();
 		});
 
 		this.timer = new WorldAnimationTimer();

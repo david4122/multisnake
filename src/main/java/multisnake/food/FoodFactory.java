@@ -30,11 +30,11 @@ public class FoodFactory {
 		int choice = rand.nextInt(100);
 		if(choice > 95)
 			return new SpeedUpFood(p);
-		else if(choice > 70)
+		else if(choice > 85)
 			return new TeleportingFood(p, world);
-		else if(choice > 60)
+		else if(choice > 65)
 			return new JumpingFood(p, world);
-		else if(choice > 40)
+		else if(choice > 50)
 			return new RunningFood(p, world);
 		else
 			return new Food(p);
