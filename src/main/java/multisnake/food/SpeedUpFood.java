@@ -1,6 +1,9 @@
-package multisnake;
+package multisnake.food;
 
 import javafx.scene.paint.Color;
+
+import multisnake.Point;
+import multisnake.Snake;
 
 public class SpeedUpFood extends Food {
 	public SpeedUpFood(Point start) {

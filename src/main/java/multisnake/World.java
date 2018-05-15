@@ -14,6 +14,9 @@ import javafx.event.EventHandler;
 import java.util.LinkedList;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
+import multisnake.food.Food;
+import multisnake.food.FoodFactory;
+
 public class World extends Canvas {
 	class WorldAnimationTimer extends AnimationTimer {
 		private boolean paused;

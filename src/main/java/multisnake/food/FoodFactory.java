@@ -1,6 +1,9 @@
-package multisnake;
+package multisnake.food;
 
 import java.util.Random;
+
+import multisnake.World;
+import multisnake.Point;
 
 public class FoodFactory {
 	private Random rand;

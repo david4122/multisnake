@@ -8,6 +8,7 @@ import multisnake.skin.SkinGenerator;
 import multisnake.skin.DefaultSkinGenerator;
 import multisnake.driver.Driveable;
 import multisnake.driver.Driver;
+import multisnake.food.Food;
 
 public class Snake implements Animatable, Driveable {
 	private class Segment {

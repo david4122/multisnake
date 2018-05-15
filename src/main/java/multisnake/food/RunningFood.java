@@ -1,9 +1,16 @@
-package multisnake;
+package multisnake.food;
 
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import javafx.scene.paint.Color;
+
+import multisnake.Point;
+import multisnake.Animatable;
+import multisnake.World;
+import multisnake.GameOver;
+import multisnake.Direction;
+import multisnake.PointOutOfBoundariesException;
 
 public class RunningFood extends Food implements Animatable {
 	private long lastUpdate;

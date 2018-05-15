@@ -1,9 +1,14 @@
-package multisnake;
+package multisnake.food;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
+
+import multisnake.Point;
+import multisnake.Animatable;
+import multisnake.World;
+import multisnake.GameOver;
 
 public class TeleportingFood extends Food implements Animatable {
 	private World world;

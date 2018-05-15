@@ -1,7 +1,12 @@
-package multisnake;
+package multisnake.food;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+
+import multisnake.Point;
+import multisnake.Drawable;
+import multisnake.Edible;
+import multisnake.Snake;
 
 public class Food implements Drawable, Edible {
 	protected Point location;
