@@ -109,7 +109,7 @@ public class World extends Canvas {
 		this.foodFactory = ff;
 	}
 
-	public synchronized Object get(Point p) {
+	public synchronized Object get(Point p) throws PointOutOfBoundariesException {
 		if(p.x >= worldWidth || p.x < 0 || p.y >= worldHeight || p.y < 0)
 			throw new PointOutOfBoundariesException();
 		for(Food f: food){

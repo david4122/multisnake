@@ -98,6 +98,13 @@ public class Snake implements Animatable, Driveable {
 		world.foodEaten(f);
 	}
 
+	public synchronized void moveHead(Point p) throws FieldIsBusyException, PointOutOfBoundariesException {
+		if(world.get(p) != null){
+			throw new FieldIsBusyException();
+		}
+		this.head.loc = p;
+	}
+
 	public synchronized void addSegment() {
 		tail = new Segment(tail.loc, tail, sg.next());
 		this.size++;

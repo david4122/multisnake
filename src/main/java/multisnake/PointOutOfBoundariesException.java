@@ -1,3 +1,3 @@
 package multisnake;
 
-public class PointOutOfBoundariesException extends RuntimeException {}
+public class PointOutOfBoundariesException extends Exception {}
