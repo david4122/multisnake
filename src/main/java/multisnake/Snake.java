@@ -74,7 +74,6 @@ public class Snake implements Animatable, Driveable {
 	}
 
 	private synchronized void move() throws GameOver {
-		System.out.println("MOVE");
 		Point nextLoc;
 		if(nextHeadPos != null) {
 			nextLoc = nextHeadPos;
@@ -82,13 +81,11 @@ public class Snake implements Animatable, Driveable {
 		} else
 			nextLoc = head.loc.translate(dir, 1);
 		Object o;
-		System.out.print(nextLoc);
 		try {
 			o = world.get(nextLoc);
 		} catch(PointOutOfBoundariesException e){
 			throw new GameOver("You've fallen off the edge of the world!'");
 		}
-		System.out.println(o);
 		if(o instanceof Food)
 			eat(((Food)o));
 		else if(o instanceof Snake){
