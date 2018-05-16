@@ -1,35 +1,34 @@
 package multisnake.food;
 
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-import java.util.Random;
 
 import multisnake.Point;
-import multisnake.PointOutOfBoundariesException;
 import multisnake.Snake;
-import multisnake.FieldIsBusyException;
 import multisnake.World;
 
 public class TeleportingFood extends Food {
-	private World world;
-	private Random rand;
+	private Point target;
 
-	public TeleportingFood(Point start, World w) {
+	public TeleportingFood(Point start, Point target, World w) {
 		super(start);
-		this.world = w;
 		this.color = Color.rgb(0, 0, 255);
-		this.rand = new Random();
+		this.target = target;
 	}
 
 	@Override
 	public void applyEffect(Snake s) {
-		while(true){
-			try {
-				s.moveHead(new Point(
-							rand.nextInt(world.getWorldWidth()), rand.nextInt(world.getWorldHeight())));
-				return;
-			} catch (FieldIsBusyException | PointOutOfBoundariesException e) {
-				//
-			}
-		}
+		s.setNextHeadPos(target);
+	}
+
+	@Override
+	public void draw(GraphicsContext gc, int fsize) {
+		gc.setLineWidth(1);
+		gc.setStroke(Color.GRAY);
+		gc.strokeLine(location.x*fsize+fsize/2, location.y*fsize+fsize/2,
+				target.x*fsize+fsize/2, target.y*fsize+fsize/2);
+		super.draw(gc, fsize);
+		gc.setFill(Color.GRAY);
+		gc.strokeOval(target.x*fsize, target.y*fsize, fsize, fsize);
 	}
 }

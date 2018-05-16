@@ -6,6 +6,7 @@ import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import multisnake.Point;
+import multisnake.RandomPointGenerator;
 import multisnake.Animatable;
 import multisnake.World;
 import multisnake.GameOver;
@@ -16,6 +17,7 @@ public class JumpingFood extends Food implements Animatable {
 	private long delay;
 	private double percent;
 	private Random rand;
+	private RandomPointGenerator pg;
 
 	public JumpingFood(Point start, World w) {
 		super(start);
@@ -23,22 +25,13 @@ public class JumpingFood extends Food implements Animatable {
 		this.world = w;
 		this.color = Color.rgb(0, 255, 0);
 		this.rand = new Random();
+		this.pg = new RandomPointGenerator(w);
 	}
 
 	@Override
 	public void update(long time) throws GameOver {
 		if(time - lastUpdate > delay){
-			Point p;
-		while(true) {
-			p = new Point(rand.nextInt(world.getWorldWidth()),
-					rand.nextInt(world.getWorldHeight()));
-			try {
-				if(world.get(p) == null)
-					break;
-			} catch(Exception e){
-				//
-			}
-		}
+			Point p = pg.next();
 			this.location = p;
 			lastUpdate = time;
 		}

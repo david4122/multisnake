@@ -25,6 +25,7 @@ public class Snake implements Animatable, Driveable {
 
 	private Segment head;
 	private Segment tail;
+	private Point nextHeadPos;
 	private int size = 1;
 	private Direction dir;
 	private SkinGenerator sg = new DefaultSkinGenerator();
@@ -73,13 +74,21 @@ public class Snake implements Animatable, Driveable {
 	}
 
 	private synchronized void move() throws GameOver {
-		Point nextLoc = head.loc.translate(dir, 1);
+		System.out.println("MOVE");
+		Point nextLoc;
+		if(nextHeadPos != null) {
+			nextLoc = nextHeadPos;
+			nextHeadPos = null;
+		} else
+			nextLoc = head.loc.translate(dir, 1);
 		Object o;
+		System.out.print(nextLoc);
 		try {
 			o = world.get(nextLoc);
 		} catch(PointOutOfBoundariesException e){
 			throw new GameOver("You've fallen off the edge of the world!'");
 		}
+		System.out.println(o);
 		if(o instanceof Food)
 			eat(((Food)o));
 		else if(o instanceof Snake){
@@ -90,7 +99,7 @@ public class Snake implements Animatable, Driveable {
 		}
 		for(Segment s=tail; s!=head; s=s.prev)
 			s.loc = s.prev.loc;
-		head.loc = head.loc.translate(dir, 1);
+		head.loc = nextLoc;
 	}
 
 	public synchronized void eat(Food f) {
@@ -98,11 +107,8 @@ public class Snake implements Animatable, Driveable {
 		world.foodEaten(f);
 	}
 
-	public synchronized void moveHead(Point p) throws FieldIsBusyException, PointOutOfBoundariesException {
-		if(world.get(p) != null){
-			throw new FieldIsBusyException();
-		}
-		this.head.loc = p;
+	public synchronized void setNextHeadPos(Point p) {
+		this.nextHeadPos = p;
 	}
 
 	public synchronized void addSegment() {

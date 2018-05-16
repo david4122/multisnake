@@ -25,7 +25,12 @@ public class Point {
 	}
 
 	@Override
-	public boolean equals(Object o){
+	public boolean equals(Object o) {
 		return o instanceof Point && ((Point)o).x == x && ((Point)o).y == y;
+	}
+
+	@Override
+	public String toString() {
+		return String.format("(%d, %d)", x, y);
 	}
 }
