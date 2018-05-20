@@ -100,8 +100,7 @@ public class Snake implements Animatable, Driveable {
 	}
 
 	public synchronized void eat(Food f) {
-		f.applyEffect(this);
-		world.foodEaten(f);
+		f.eaten(this);
 	}
 
 	public synchronized void setNextHeadPos(Point p) {

@@ -2,7 +2,6 @@ package multisnake.food;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import multisnake.Point;
@@ -12,19 +11,14 @@ import multisnake.World;
 import multisnake.GameOver;
 
 public class JumpingFood extends Food implements Animatable {
-	private World world;
 	private long lastUpdate;
 	private long delay;
 	private double percent;
-	private Random rand;
 	private RandomPointGenerator pg;
 
-	public JumpingFood(Point start, World w) {
-		super(start);
+	public JumpingFood(World w, Point start) {
+		super(w, start, Color.rgb(0, 255, 0));
 		this.delay = TimeUnit.NANOSECONDS.convert(5000, TimeUnit.MILLISECONDS);
-		this.world = w;
-		this.color = Color.rgb(0, 255, 0);
-		this.rand = new Random();
 		this.pg = new RandomPointGenerator(w);
 	}
 

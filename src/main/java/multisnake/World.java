@@ -119,13 +119,13 @@ public class World extends Canvas {
 	public synchronized Object get(Point p) throws PointOutOfBoundariesException {
 		if(p.x >= worldWidth || p.x < 0 || p.y >= worldHeight || p.y < 0)
 			throw new PointOutOfBoundariesException();
-		for(Food f: food){
-			if(f.getLocation().equals(p))
-				return f;
-		}
 		for(Snake s: snakes){
 			if(s.occupies(p))
 				return s;
+		}
+		for(Food f: food){
+			if(f.getLocation().equals(p))
+				return f;
 		}
 		return null;
 	}

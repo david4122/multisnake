@@ -10,9 +10,8 @@ import multisnake.World;
 public class TeleportingFood extends Food {
 	private Point target;
 
-	public TeleportingFood(Point start, Point target, World w) {
-		super(start);
-		this.color = Color.rgb(0, 0, 255);
+	public TeleportingFood(World world, Point start, Point target) {
+		super(world, start, Color.rgb(0, 0, 255));
 		this.target = target;
 	}
 

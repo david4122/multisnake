@@ -19,12 +19,11 @@ public class RunningFood extends Food implements Animatable {
 	private Random rand;
 	private World world;
 
-	public RunningFood(Point start, World w) {
-		super(start);
+	public RunningFood(World w, Point start) {
+		super(w, start, Color.rgb(100, 100, 100));
 		this.delay = TimeUnit.NANOSECONDS.convert(500, TimeUnit.MILLISECONDS);
 		this.world = w;
 		this.rand = new Random();
-		this.color = Color.rgb(100, 100, 100);
 	}
 
 	@Override
