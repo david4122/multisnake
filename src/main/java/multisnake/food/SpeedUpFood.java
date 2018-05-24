@@ -10,7 +10,7 @@ import multisnake.World;
 
 public class SpeedUpFood extends Food {
 	public SpeedUpFood(World w, Point start) {
-		super(w, start, Color.rgb(233, 84, 32));
+		super(w, start, Color.rgb(175, 95, 0));
 	}
 
 	@Override

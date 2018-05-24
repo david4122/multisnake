@@ -11,7 +11,7 @@ public class PersistentFood extends Food {
 	private int current;
 
 	public PersistentFood(World w, Point p, int persistence) {
-		super(w, p, Color.rgb(255, 0, 255));
+		super(w, p, Color.rgb(255, 0, 0));
 		this.persistence = current = persistence;
 	}
 
@@ -28,7 +28,7 @@ public class PersistentFood extends Food {
 	@Override
 	public void eaten(Snake s) {
 		applyEffect(s);
-		if(0 == current--)
+		if(0 == --current)
 			world.foodEaten(this);
 	}
 }

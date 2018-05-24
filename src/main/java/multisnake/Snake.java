@@ -112,10 +112,6 @@ public class Snake implements Animatable, Driveable {
 		this.size++;
 	}
 
-	public synchronized void setDirection(Direction d) {
-		this.dir = d;
-	}
-
 	public synchronized Direction getDirection() {
 		return this.dir;
 	}
@@ -149,6 +145,8 @@ public class Snake implements Animatable, Driveable {
 
 	@Override
 	public synchronized void move(Direction d) {
+		if(d.equals(dir.opposite()))
+			return;
 		this.dir = d;
 	}
 }
