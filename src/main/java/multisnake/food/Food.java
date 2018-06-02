@@ -6,6 +6,7 @@ import javafx.scene.paint.Color;
 import multisnake.Point;
 import multisnake.Drawable;
 import multisnake.Edible;
+import multisnake.Effect;
 import multisnake.Snake;
 import multisnake.World;
 
@@ -13,14 +14,12 @@ public class Food implements Drawable, Edible {
 	protected Point location;
 	protected Color color;
 	protected World world;
+	protected Effect effect;
 
-	public Food(World w, Point p) {
-		this(w, p, Color.rgb(0, 0, 0));
-	}
-
-	protected Food(World w, Point p, Color c) {
+	protected Food(World w, Point p, Effect e, Color c) {
 		this.location = p;
 		this.world = w;
+		this.effect = e;
 		this.color = c;
 	}
 
@@ -28,8 +27,8 @@ public class Food implements Drawable, Edible {
 		return this.location;
 	}
 
-	protected void applyEffect(Snake s) {
-		s.addSegment();
+	protected void applyEffect(Snake s, long time) {
+		effect.apply(s, time);
 	}
 
 	@Override
@@ -39,8 +38,8 @@ public class Food implements Drawable, Edible {
 	}
 
 	@Override
-	public void eaten(Snake s) {
-		this.applyEffect(s);
+	public void eaten(Snake s, long time) {
+		this.applyEffect(s, time);
 		world.foodEaten(this);
 	}
 }

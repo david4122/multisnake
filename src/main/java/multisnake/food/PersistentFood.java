@@ -6,7 +6,7 @@ import multisnake.Point;
 import multisnake.Snake;
 import multisnake.World;
 
-public class PersistentFood extends Food {
+public class PersistentFood extends BasicFood {
 	private int persistence;
 	private int current;
 
@@ -26,8 +26,8 @@ public class PersistentFood extends Food {
 	}
 
 	@Override
-	public void eaten(Snake s) {
-		applyEffect(s);
+	public void eaten(Snake s, long time) {
+		applyEffect(s, time);
 		if(0 == --current)
 			world.foodEaten(this);
 	}

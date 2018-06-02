@@ -10,7 +10,7 @@ import multisnake.Animatable;
 import multisnake.World;
 import multisnake.GameOver;
 
-public class JumpingFood extends Food implements Animatable {
+public class JumpingFood extends BasicFood implements Animatable {
 	private long lastUpdate;
 	private long delay;
 	private double percent;

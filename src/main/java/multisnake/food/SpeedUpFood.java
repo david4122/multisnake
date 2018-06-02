@@ -1,32 +1,25 @@
 package multisnake.food;
 
-import java.util.concurrent.TimeUnit;
-
 import javafx.scene.paint.Color;
-
+import multisnake.Effect;
 import multisnake.Point;
 import multisnake.Snake;
 import multisnake.World;
 
-public class SpeedUpFood extends Food {
-	public SpeedUpFood(World w, Point start) {
-		super(w, start, Color.rgb(175, 95, 0));
+public class SpeedUpFood extends BasicFood {
+	private Effect effect;
+
+	public SpeedUpFood(World w, Point start, long duration) {
+		super(w, start, Color.rgb(227, 75, 22));
+		this.effect = new Effect(duration, (Snake s) -> {
+			s.setDelay(s.getDelay()*2/3);
+		}, (Snake s) -> {
+			s.setDelay(s.getDelay()*3/2);
+		});
 	}
 
 	@Override
-	public void applyEffect(Snake s) {
-		long currentDelay = s.getDelay();
-		s.setDelay(currentDelay*4/5);
-		new Thread(){
-			@Override
-			public void run() {
-				try {
-					TimeUnit.SECONDS.sleep(15);
-					s.setDelay(currentDelay);
-				} catch (InterruptedException e) {
-					//
-				}
-			}
-		}.start();
+	public void applyEffect(Snake s, long time) {
+		s.applyEffect(effect, time);
 	}
 }

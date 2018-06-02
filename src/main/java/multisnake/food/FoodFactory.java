@@ -1,6 +1,7 @@
 package multisnake.food;
 
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 import multisnake.World;
 import multisnake.Point;
@@ -21,9 +22,9 @@ public class FoodFactory {
 		Point p = pg.next();
 
 		int choice = rand.nextInt(100);
-		if(choice > 95)
-			return new SpeedUpFood(world, p);
-		else if(choice > 85)
+		if(choice > 90)
+			return new SpeedUpFood(world, p, TimeUnit.NANOSECONDS.convert(20000, TimeUnit.MILLISECONDS));
+		else if(choice >  85)
 			return new PersistentFood(world, p, 5);
 		else if(choice > 70)
 			return new TeleportingFood(world, p, pg.next());
@@ -32,6 +33,6 @@ public class FoodFactory {
 		else if(choice > 40)
 			return new RunningFood(world, p);
 		else
-			return new Food(world, p);
+			return new BasicFood(world, p);
 	}
 }

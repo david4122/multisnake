@@ -1,5 +1,6 @@
 package multisnake;
 
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.TimeUnit;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
@@ -31,6 +32,7 @@ public class Snake implements Animatable, Driveable {
 	private SkinGenerator sg = new DefaultSkinGenerator();
 	private World world;
 	private Driver driver;
+	private ConcurrentLinkedQueue<Effect>effects;
 
 	private volatile long delay;
 	private long lastUpdate;
@@ -43,6 +45,7 @@ public class Snake implements Animatable, Driveable {
 		this.head = this.tail = new Segment(start, null, sg.next());
 		for(int i=0;i<initSize;i++)
 			addSegment();
+		this.effects = new ConcurrentLinkedQueue<>();
 	}
 
 	public Snake(World w, Point start, int initSize, Direction dir) {
@@ -59,8 +62,13 @@ public class Snake implements Animatable, Driveable {
 
 	@Override
 	public synchronized void update(long time) throws GameOver {
+		for(Effect e: effects){
+			if(time - e.activeSince() > e.getDuration()){
+				removeEffect(e);
+			}
+		}
 		if(time - lastUpdate > delay){
-			move();
+			move(time);
 			this.lastUpdate = time;
 		}
 	}
@@ -73,13 +81,8 @@ public class Snake implements Animatable, Driveable {
 		}
 	}
 
-	private synchronized void move() throws GameOver {
-		Point nextLoc;
-		if(nextHeadPos != null) {
-			nextLoc = nextHeadPos;
-			nextHeadPos = null;
-		} else
-			nextLoc = head.loc.translate(dir, 1);
+	private synchronized void move(long time) throws GameOver {
+		Point nextLoc = getNextHeadPos();
 		Object o;
 		try {
 			o = world.get(nextLoc);
@@ -87,7 +90,7 @@ public class Snake implements Animatable, Driveable {
 			throw new GameOver("You've fallen off the edge of the world!'");
 		}
 		if(o instanceof Food)
-			eat(((Food)o));
+			eat(((Food)o), time);
 		else if(o instanceof Snake){
 			if(o == this)
 				throw new GameOver("You bit yourself!");
@@ -99,12 +102,32 @@ public class Snake implements Animatable, Driveable {
 		head.loc = nextLoc;
 	}
 
-	public synchronized void eat(Food f) {
-		f.eaten(this);
+	public synchronized void eat(Food f, long time) {
+		f.eaten(this, time);
+	}
+
+	public synchronized void applyEffect(Effect e, long time) {
+		e.apply(this, time);
+		effects.add(e);
+	}
+
+	public synchronized void removeEffect(Effect e) {
+		e.remove(this);
+		effects.remove(e);
 	}
 
 	public synchronized void setNextHeadPos(Point p) {
 		this.nextHeadPos = p;
+	}
+
+	public synchronized Point getNextHeadPos() {
+		Point nextLoc;
+		if(nextHeadPos != null) {
+			nextLoc = nextHeadPos;
+			nextHeadPos = null;
+		} else
+			nextLoc = head.loc.translate(dir, 1);
+		return nextLoc;
 	}
 
 	public synchronized void addSegment() {

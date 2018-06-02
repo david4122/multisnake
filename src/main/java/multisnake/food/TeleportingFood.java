@@ -7,7 +7,7 @@ import multisnake.Point;
 import multisnake.Snake;
 import multisnake.World;
 
-public class TeleportingFood extends Food {
+public class TeleportingFood extends BasicFood {
 	private Point target;
 
 	public TeleportingFood(World world, Point start, Point target) {
@@ -16,7 +16,7 @@ public class TeleportingFood extends Food {
 	}
 
 	@Override
-	public void applyEffect(Snake s) {
+	public void applyEffect(Snake s, long time) {
 		s.setNextHeadPos(target);
 	}
 

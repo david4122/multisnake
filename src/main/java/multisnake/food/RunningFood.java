@@ -12,7 +12,7 @@ import multisnake.GameOver;
 import multisnake.Direction;
 import multisnake.PointOutOfBoundariesException;
 
-public class RunningFood extends Food implements Animatable {
+public class RunningFood extends BasicFood implements Animatable {
 	private long lastUpdate;
 	private long delay;
 
