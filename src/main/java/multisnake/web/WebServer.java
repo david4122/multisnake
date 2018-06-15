@@ -6,16 +6,16 @@ import java.net.Socket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import multisnake.World;
+import multisnake.WorldView;
 
 public class WebServer implements Runnable {
 	private ExecutorService executor;
 	private ServerSocket ssocket;
-	private World world;
+	private WorldView world;
 
 	private static final int PORT = 8866;
 
-	public WebServer(World w) throws IOException {
+	public WebServer(WorldView w) throws IOException {
 		this.executor = Executors.newCachedThreadPool();
 		this.ssocket = new ServerSocket(PORT);
 		this.world = w;

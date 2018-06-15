@@ -8,8 +8,9 @@ import multisnake.skin.RedSkinGenerator;
 public class MultiplayerGameBuilder extends GameBuilder {
 
 	@Override
-	public World build(int width, int height, int fsize) {
-		World w = new World(width, height, fsize);
+	public WorldView build(int width, int height, int fsize) {
+		World w = new World(width, height);
+		WorldView wv = new WorldView(w, fsize);
 
 		Snake s1 = new Snake(w, new Point(0, 0), 5, Direction.EAST,
 				new BlueSkinGenerator());
@@ -20,9 +21,9 @@ public class MultiplayerGameBuilder extends GameBuilder {
 		ArrowsDriver d2 = new ArrowsDriver();
 		s2.setDriver(d2);
 
-		w.addSnake(s1);
-		w.addSnake(s2);
+		wv.addSnake(s1);
+		wv.addSnake(s2);
 
-		return w;
+		return wv;
 	}
 }

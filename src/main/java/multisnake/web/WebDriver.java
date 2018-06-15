@@ -7,26 +7,26 @@ import java.net.Socket;
 
 import multisnake.Direction;
 import multisnake.Snake;
-import multisnake.World;
+import multisnake.WorldView;
 import multisnake.driver.Driveable;
 import multisnake.driver.Driver;
 
 public class WebDriver extends Driver implements Runnable {
 	private Socket remote;
 	private Driveable subject;
-	private World world;
+	private WorldView world;
 
 	public WebDriver(Socket remote) {
 		this.remote = remote;
 	}
 
 	@Override
-	public void install(World w) {
+	public void install(WorldView w) {
 		this.world = w;
 	}
 
 	@Override
-	public void uninstall(World w) {
+	public void uninstall(WorldView w) {
 		//
 	}
 

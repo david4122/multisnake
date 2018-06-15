@@ -1,9 +1,9 @@
 package multisnake.driver;
 
-import multisnake.World;
+import multisnake.WorldView;
 
 public abstract class Driver {
-	public abstract void install(World w);
-	public abstract void uninstall(World w);
+	public abstract void install(WorldView w);
+	public abstract void uninstall(WorldView w);
 	public abstract void setSubject(Driveable d);
 }

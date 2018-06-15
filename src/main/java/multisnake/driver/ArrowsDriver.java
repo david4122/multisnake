@@ -4,7 +4,7 @@ import javafx.event.EventHandler;
 import javafx.scene.input.KeyEvent;
 
 import multisnake.Direction;
-import multisnake.World;
+import multisnake.WorldView;
 
 public class ArrowsDriver extends Driver implements EventHandler<KeyEvent> {
 	private Driveable subject;
@@ -30,7 +30,7 @@ public class ArrowsDriver extends Driver implements EventHandler<KeyEvent> {
 	}
 
 	@Override
-	public void install(World w) {
+	public void install(WorldView w) {
 		w.addEventHandler(KeyEvent.KEY_PRESSED, this);
 	}
 
@@ -40,7 +40,7 @@ public class ArrowsDriver extends Driver implements EventHandler<KeyEvent> {
 	}
 
 	@Override
-	public void uninstall(World w) {
+	public void uninstall(WorldView w) {
 		w.removeEventHandler(KeyEvent.KEY_PRESSED, this);
 	}
 }

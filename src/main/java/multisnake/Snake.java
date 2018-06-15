@@ -12,7 +12,7 @@ import multisnake.driver.Driver;
 import multisnake.food.Food;
 
 public class Snake implements Animatable, Driveable {
-	private class Segment {
+	private class Segment implements Drawable {
 		private Point loc;
 		private Segment prev;
 		private Color color;
@@ -21,6 +21,12 @@ public class Snake implements Animatable, Driveable {
 			this.loc = loc;
 			this.prev = p;
 			this.color = c;
+		}
+
+		@Override
+		public void draw(GraphicsContext gc, int fsize) {
+			gc.setFill(color);
+			gc.fillRect(loc.x*fsize, loc.y*fsize, fsize, fsize);
 		}
 	}
 
@@ -76,8 +82,7 @@ public class Snake implements Animatable, Driveable {
 	@Override
 	public void draw(GraphicsContext gc, int fsize) {
 		for(Segment s=tail; s!=null; s=s.prev){
-			gc.setFill(s.color);
-			gc.fillRect(s.loc.x*fsize, s.loc.y*fsize, fsize, fsize);
+			s.draw(gc, fsize);
 		}
 	}
 
