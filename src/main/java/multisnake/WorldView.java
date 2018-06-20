@@ -3,7 +3,6 @@ package multisnake;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
 import javafx.beans.value.ObservableValue;
-import javafx.event.EventHandler;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Alert;
@@ -17,14 +16,14 @@ import multisnake.food.Food;
 public class WorldView extends Canvas {
 	class WorldAnimationTimer extends AnimationTimer {
 		private volatile boolean paused;
-		private long pauseLength;
+		private volatile long pauseLength;
 
-		private long pauseStart;
+		private volatile long pauseStart;
 
 		@Override
-		public void handle(long currentTime){
+		public void handle(long currentTime) {
 			long gameTime = currentTime - pauseLength;
-			getGraphicsContext2D().clearRect(0, 0, world.getWorldWidth()*fieldSize,
+			WorldView.this.getGraphicsContext2D().clearRect(0, 0, world.getWorldWidth()*fieldSize,
 					world.getWorldHeight()*fieldSize);
 			try {
 				int totalLength = 0;
@@ -52,11 +51,15 @@ public class WorldView extends Canvas {
 		}
 
 		public synchronized void pause() {
+			if(isPaused())
+				return;
 			this.pauseStart = System.nanoTime();
 			this.paused = true;
 		}
 
 		public synchronized void resume() {
+			if(!isPaused())
+				return;
 			this.paused = false;
 			this.pauseLength+= System.nanoTime() - pauseStart;
 		}
@@ -76,20 +79,17 @@ public class WorldView extends Canvas {
 		this.fieldSize = fsize;
 		setFocusTraversable(true);
 
-		addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>(){
-			@Override
-			public void handle(KeyEvent e) {
-				switch(e.getCode()){
-					case SPACE:
-					case P:
-						if(timer.isPaused())
-							timer.resume();
-						else
-							timer.pause();
-						break;
-					default:
-						//
-				}
+		addEventHandler(KeyEvent.KEY_PRESSED, (KeyEvent e) -> {
+			switch(e.getCode()){
+				case SPACE:
+				case P:
+					if(timer.isPaused())
+						timer.resume();
+					else
+						timer.pause();
+					break;
+				default:
+					//
 			}
 		});
 
